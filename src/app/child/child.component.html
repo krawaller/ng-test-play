@@ -1,0 +1,4 @@
+<p [class.invalid]="!valid">
+  <input [formControl]="version" (keyup.enter)="submit()">
+  <button (click)="submit()">Submit</button>
+</p>

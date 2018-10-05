@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'foo';
+  field: string
+  version: string
+  receiveSubmission(newVersion: string) {
+    this.version = newVersion
+  }
 }

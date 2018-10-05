@@ -1,13 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { By } from '@angular/platform-browser';
+
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'versionvalidatedinput',
+  template: ''
+})
+class FakeThingy {
+  @Output() submission = new EventEmitter();
+}
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent, FakeThingy
       ],
     }).compileComponents();
+
   }));
 
   it('should create the app', () => {
@@ -27,5 +39,17 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to foo!');
+  });
+
+  it('should show submitted versions', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const child: FakeThingy = fixture.debugElement.query(By.css('versionvalidatedinput')).componentInstance;
+
+    const fakeVersion = "1.2.3";
+    child.submission.emit(fakeVersion);
+
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.nativeElement.querySelector('.qa-version').innerHTML).toContain(fakeVersion);
   });
 });
